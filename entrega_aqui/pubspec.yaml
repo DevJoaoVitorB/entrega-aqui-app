@@ -1,0 +1,36 @@
+name: entrega_aqui
+description: 'Smart delivery management made simple.'
+publish_to: 'none'
+
+version: 1.0.0
+
+environment:
+    sdk: ^3.11.3
+
+dependencies:
+    flutter:
+        sdk: flutter
+
+    # Comunicação HTTP
+    http: ^1.6.0
+
+    # Gerenciamento de Estado Global
+    provider: ^6.1.5+1
+
+    # Roteamento do APP
+    go_router: ^17.3.0
+
+    # Persistência em CACHE
+    hive_flutter: ^1.1.0
+
+    # Formatação (Datas, Horários, Moedas)
+    intl: ^0.20.2
+
+dev_dependencies:
+    flutter_test:
+        sdk: flutter
+
+    flutter_lints: ^6.0.0
+
+flutter:
+    uses-material-design: true
