@@ -1,3 +1,4 @@
+import 'package:entrega_aqui/core/constants/app_values.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +40,7 @@ class _OrderRegisterView extends StatelessWidget {
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final bool isWide = constraints.maxWidth >= 420;
-            final double fieldSpacing = isWide ? 14 : 12;
+            final double fieldSpacing = isWide ? AppSpacing.lg : AppSpacing.md;
             final double numberFieldWidth = isWide ? 96 : 84;
 
             return Column(
@@ -54,7 +55,10 @@ class _OrderRegisterView extends StatelessWidget {
                           Widget? _,
                         ) {
                           return ListView(
-                            padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.md,
+                              vertical: AppSpacing.lg,
+                            ),
                             children: <Widget>[
                               // Formulário para localização de origem da encomenda
                               AddressFormSection(

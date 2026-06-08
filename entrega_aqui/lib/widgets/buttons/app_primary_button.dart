@@ -1,5 +1,8 @@
-import 'package:entrega_aqui/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+
+// Configs
+import 'package:entrega_aqui/core/constants/app_colors.dart';
+import 'package:entrega_aqui/core/constants/app_values.dart';
 
 class AppPrimaryButton extends StatelessWidget {
   const AppPrimaryButton({
@@ -17,24 +20,24 @@ class AppPrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 58,
+      height: 60,
       child: ElevatedButton.icon(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
+          foregroundColor: AppColors.secondary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(AppRadius.md),
           ),
           elevation: 6,
         ),
-        icon: Icon(icon, size: 22),
+        icon: Icon(icon, size: AppIconSize.md),
         label: Text(
           label,
           style: const TextStyle(
-            fontSize: 16,
+            fontSize: AppFontSize.lg,
             fontWeight: FontWeight.w800,
-            letterSpacing: 0.6,
+            letterSpacing: 0.5,
           ),
         ),
       ),

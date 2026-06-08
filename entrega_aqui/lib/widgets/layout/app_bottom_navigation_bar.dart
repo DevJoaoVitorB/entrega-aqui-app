@@ -1,11 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+// Configs
 import 'package:entrega_aqui/core/constants/app_colors.dart';
 import 'package:entrega_aqui/core/constants/app_values.dart';
-import 'package:flutter/material.dart';
+
+// Rotas Mapeadas
+import 'package:entrega_aqui/routes/app_routes.dart';
 
 class AppBottomNavigationBar extends StatelessWidget {
   const AppBottomNavigationBar({super.key, required this.selectedIndex});
 
   final int selectedIndex;
+
+  static const List<_NavItemData> _items = <_NavItemData>[
+    _NavItemData(
+      label: 'Início',
+      icon: Icons.grid_view_rounded,
+      route: AppRoutes.dashboard,
+    ),
+    _NavItemData(
+      label: 'Novo',
+      icon: Icons.add_box_outlined,
+      route: AppRoutes.registerOrder,
+    ),
+    _NavItemData(
+      label: 'Rastrear',
+      icon: Icons.local_shipping_outlined,
+      route: AppRoutes.tracking,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,72 +48,84 @@ class AppBottomNavigationBar extends StatelessWidget {
         vertical: AppSpacing.md,
         horizontal: AppSpacing.lg,
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          _NavItem(label: 'Início', icon: Icons.grid_view_rounded),
-          _NavItem(label: 'Novo', icon: Icons.add_box_outlined),
-          _NavItem(label: 'Rastrear', icon: Icons.local_shipping_outlined),
-        ],
+        children: _items
+            .map(
+              (_NavItemData item) => _NavItem(
+                data: item,
+                selected: _items.indexOf(item) == selectedIndex,
+                onTap: () => context.go(item.route),
+              ),
+            )
+            .toList(),
       ),
     );
   }
 }
 
-class _NavItem extends StatelessWidget {
-  const _NavItem({required this.label, required this.icon});
+class _NavItemData {
+  const _NavItemData({
+    required this.label,
+    required this.icon,
+    required this.route,
+  });
 
   final String label;
   final IconData icon;
+  final String route;
+}
+
+class _NavItem extends StatelessWidget {
+  const _NavItem({
+    required this.data,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final _NavItemData data;
+  final bool selected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final AppBottomNavigationBar parent = context
-        .findAncestorWidgetOfExactType<AppBottomNavigationBar>()!;
-    final bool selected = parent.selectedIndex == _indexForLabel(label);
     final Color foregroundColor = selected
-        ? AppColors.primary
-        : const Color(0xFF4E5563);
+        ? AppColors.textPrimary
+        : AppColors.textSecondary;
     final Color backgroundColor = selected
-        ? const Color(0xFFFFC107)
-        : Colors.transparent;
+        ? AppColors.lightYellow
+        : AppColors.transparent;
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: selected ? 18 : 10,
-        vertical: 8,
-      ),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Icon(icon, color: foregroundColor, size: 26),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            style: TextStyle(
-              color: foregroundColor,
-              fontSize: 12,
-              fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+        padding: EdgeInsets.symmetric(
+          horizontal: selected ? AppSpacing.lg : AppSpacing.md,
+          vertical: AppSpacing.sm,
+        ),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(data.icon, color: foregroundColor, size: AppIconSize.md),
+            const SizedBox(height: 2),
+            Text(
+              data.label,
+              style: TextStyle(
+                color: foregroundColor,
+                fontSize: AppFontSize.md,
+                fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
-  }
-
-  int _indexForLabel(String label) {
-    switch (label) {
-      case 'Novo':
-        return 1;
-      case 'Rastrear':
-        return 2;
-      case 'Início':
-      default:
-        return 0;
-    }
   }
 }

@@ -12,7 +12,7 @@ class AppColors {
 
   static const Color border = Color(0xFFC2C7D0);
   static const Color shadow = Color(0x30000000);
-  
+
   static const Color darkRed = Color(0xFF5A2424);
   static const Color lightRed = Color(0xFFEF5350);
   static const Color darkGreen = Color(0xFF004916);
@@ -21,4 +21,6 @@ class AppColors {
   static const Color lightBlue = Color(0xFF42A5F5);
   static const Color darkYellow = Color(0xFF745B00);
   static const Color lightYellow = Color(0xFFFFC107);
+
+  static const Color transparent = Color(0x00000000);
 }
